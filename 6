@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define USER_COUNT 5
+
+char** allocStringList(int count, int stringLength);
+void deleteStringList(char** list, int count);
+void sort(char** list, int count);
+
+void main()
+{
+	char** elements =
+		allocStringList(USER_COUNT, 50);
+
+	if (elements == NULL)
+	{
+		return 1;
+	}
+
+	for (int i = 0; i < USER_COUNT; i++)
+	{
+		printf("Please enter last name:\n");
+		fgets(elements[i], 50, stdin);
+	}
+
+	sort(elements, USER_COUNT);
+
+	printf("The list:\n");
+	for (int i = 0; i < USER_COUNT; i++)
+	{
+		printf("%s\n", elements[i]);
+	}
+	deleteStringList(elements, 5);
+}
+
+char** allocStringList(int count, int stringLength)
+{
+	char** memory = (char**)malloc(count * sizeof(char*));
+	if (memory == NULL)
+	{
+		printf("Can't allocate memory");
+		return NULL;
+	}
+	for (int i = 0; i < count; i++)
+	{
+		*(memory + i) = malloc(stringLength);
+	}
+	return memory;
+}
+
+void deleteStringList(char** list, int count)
+{
+	if (list == NULL)
+	{
+		printf("Error: Pointer to list is empty");
+		return;
+	}
+	for (int i = 0; i < count; i++)
+	{
+		free(*(list + i));
+	}
+	free(list);
+}
+
+void sort(char** list, int count)
+{
+	for (int i = 0; i < count - 1; i++)
+	{
+		for (int j = 0; j < count - 1 - i; j++)
+		{
+			if (strcmp(list[j], list[j + 1]) == 1)
+			{
+				char* buff = list[j];
+				list[j] = list[j + 1];
+				list[j + 1] = buff;
+			}
+		}
+	}
+}
