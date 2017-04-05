@@ -1,0 +1,56 @@
+#include <stdlib.h>
+#include <stdbool.h>
+
+struct St
+{
+	float f1;
+	float f2;
+	float f3;
+	float f4;
+	float f5;
+	float f6;
+};
+
+void main()
+{
+	struct St** st;
+	st = malloc(5 * sizeof(struct St*));
+	for (int i = 0; i < 5; i++)
+	{
+		struct St* tmp = malloc(sizeof(struct St));
+		tmp->f1 = 0;
+		tmp->f2 = 0;
+		tmp->f3 = 0;
+		tmp->f4 = 0;
+		tmp->f5 = 0;
+		tmp->f6 = 0;
+		tmp->f6 = 0;
+
+		st[i] = tmp;
+	}
+
+	st[3]->f1 = 50;
+
+	struct St* thirdElement = *(st + 3);
+	thirdElement->f1 = 888;
+	thirdElement->f2 = 999;
+	
+	for (int i = 0; i < 5; i++)
+	{
+		printf("\nst[%i]:\n", i);
+		struct St* tmp = *(st + i);
+		printf("f1 = %.2f\t", tmp->f1);
+		printf("f2 = %.2f\t", tmp->f2);
+		printf("f3 = %.2f\t", tmp->f3);
+		printf("f4 = %.2f\t", tmp->f4);
+		printf("f5 = %.2f\t", tmp->f5);
+		printf("f6 = %.2f\t", tmp->f6);
+
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		free(st[i]);
+	}
+	free(st);
+}
