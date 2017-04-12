@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	FILE* file = fopen(
+		"c:\\windows\\system.ini",
+		"r");
+
+	char* buff = malloc(50);
+
+	fseek(file, 0, SEEK_END);
+	long fileSize = ftell(file);
+	printf("fileSize: %i", fileSize);
+	
+	while (fgets(buff, 50, file))
+	{
+		printf("%s", buff);
+	}
+
+	fclose(file);
+}
+------------------------------
